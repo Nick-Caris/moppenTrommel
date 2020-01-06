@@ -1,0 +1,29 @@
+{
+  "name": "moppentrommel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nick-Caris/moppenTrommel.git"
+  },
+  "keywords": [
+    "mop"
+  ],
+  "author": "Nick Alexander Caris, Tom",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Nick-Caris/moppenTrommel/issues"
+  },
+  "homepage": "https://github.com/Nick-Caris/moppenTrommel#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ws": "^7.2.1"
+  }
+}

@@ -1,0 +1,33 @@
+html {
+    overflow-y: hidden !important;
+}
+
+p {
+    color: whitesmoke; }
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: black;
+}
+.card {
+
+    background: #000;
+    color: whitesmoke;
+}
+
+.card-content {
+    color: whitesmoke;
+}
+
+.card-content .title {
+    color: whitesmoke; }
+
+.card-content .subtitle {
+    color: whitesmoke; }
+
+.inner-card-content {
+    text-align: center;
+    height: 20vh;
+}
