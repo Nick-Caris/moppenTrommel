@@ -16,6 +16,18 @@ async function updateJoke() {
     return null;
 }
 
+async function updateGif() {
+    // you can use this method to call the widget backend and if everything succeeds
+    // load the HTML into the frontend by setting the innerHTML of an element in your HTML template
+    const response = await fetch(`http://${host}/${userId}/giphy`);
+    if (response.status === 200) {
+        const html = await response.text();
+        const container = document.getElementById('container');
+        container.innerHTML = html;
+    }
+    return null;
+}
+
 // You can use a websocket client to fetch new info when you like
 const wsClient = () => {
     const webSocketClient = new WebSocket(`ws://${host}/ws`);
@@ -36,6 +48,9 @@ const wsClient = () => {
             case 'UPDATED_JOKE':
                 // For example, you can fetch new stuff to be displayed on your frontend based
                 await updateJoke();
+                break;
+            case 'GIF':
+                await updateGif();
                 break;
             default:
                 return;

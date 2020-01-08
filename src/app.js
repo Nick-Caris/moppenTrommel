@@ -106,6 +106,16 @@ const setupConnection = () => {
                     );
                 }
             }
+
+            if (voice === 'giphy'){
+                const client = clients[userId];
+
+                if (client.socket) {
+                    client.socket.send(
+                        JSON.stringify({type: 'GIF'})
+                    );
+                }
+            }
         });
 
         wsClient.on('close', event => {

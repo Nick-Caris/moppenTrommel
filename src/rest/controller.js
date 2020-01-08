@@ -42,12 +42,6 @@ controller.get('/:userId', async (req, res, next) => {
 
         // Create your own HTML
         const widgetHTML = `
-        <style> 
-        p {
-            color: white
-        }
-        </style>
-        
         <div class="container" >
             <p>${setup}</p>
             <p>${punchLine}</p>
@@ -73,16 +67,27 @@ controller.get('/:userId/html', async (req, res, next) => {
     try {
         const {setup, punchLine} = await getJoke();
 
-        const html = `
-        <style> 
-        p {
-            color: white
-        }
-        </style>
-        
+        const html = `     
         <div class="container" >
             <p>${setup}</p>
             <p>${punchLine}</p>
+        </div>
+        `;
+
+        res.set('Content-Type', 'text/html');
+        return res.send(html);
+    } catch (error) {
+        next(error);
+    }
+});
+
+controller.get('/:userId/giphy', async (req, res, next) => {
+    try {
+        gif = await getGif();
+
+        const html = `
+        <div class="container" >
+          <img src="${gif}">
         </div>
         `;
 
@@ -105,6 +110,17 @@ async function getJoke() {
     const punchLine = json.punchline;
 
     return {setup: setup, punchLine: punchLine};
+}
+
+async function getGif() {
+    const {GIFY_KEY} = process.env;
+    console.log('key: ', GIFY_KEY);
+
+    const response = await fetch(`http://api.giphy.com/v1/gifs/random?key=${GIFY_KEY}&limit=1`);
+
+    const json = await response.json();
+
+    return json.data.image_url;
 }
 
 
