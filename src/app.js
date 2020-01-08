@@ -4,6 +4,7 @@ const http = require('http');
 const Ws = require('ws');
 const cors = require('cors');
 const jokeController = require('./rest/controller');
+const {sentenceContainsWord, commandWords} = require('./util/voiceHelper');
 require('dotenv').config();
 
 const httpServer = http.createServer();
@@ -13,12 +14,12 @@ const app = express();
 const clients = {};
 
 // Values from the .env file.
-const { WEBSOCKET_SERVER_ADDRESS, HTTP_PORT } = process.env;
+const {WEBSOCKET_SERVER_ADDRESS, HTTP_PORT} = process.env;
 
 httpServer.on('request', app);
 
 app.use(bodyParser.json());
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({origin: true, credentials: true}));
 app.use(express.static('public'));
 
 // Middleware function to bind the clients to the request.
@@ -87,24 +88,19 @@ const setupConnection = () => {
             resolve(wsClient);
         });
 
-        const commandWords = [
-            'tell me a new joke',
-            'new joke',
-        ];
-
         wsClient.on('message', event => {
             const message = JSON.parse(event);
             // The message has a field called bioData which holds the biometric data and the userId of the person to which this data belongs.
 
             // An example of getting these values is described below
-            const { userId, voice } = message.bioData;
+            const {userId, voice} = message.bioData;
 
             if (sentenceContainsWord(voice, commandWords, false)) {
                 const client = clients[userId];
 
                 if (client.socket) {
                     client.socket.send(
-                        JSON.stringify({ type: 'UPDATED_JOKE' })
+                        JSON.stringify({type: 'UPDATED_JOKE'})
                     );
                 }
             }
@@ -129,20 +125,3 @@ httpServer.listen(HTTP_PORT, async () => {
     await setupConnection();
     console.log(`http server listening on port: ${HTTP_PORT}`);
 });
-
-const sentenceContainsWord = (string, match, single = true) => {
-    if (!string || !match || string.length === 0 || match.length === 0) {
-        return false;
-    }
-
-    string = string.toLowerCase();
-    if (single) {
-        const split = string.split(' ');
-        return Array.isArray(match)
-            ? split.some(word => match.includes(word))
-            : split.includes(match);
-    }
-    return Array.isArray(match)
-        ? match.some(toMatch => string.includes(toMatch))
-        : string.includes(match);
-};
