@@ -3,7 +3,9 @@ html {
 }
 
 p {
-    color: whitesmoke; }
+    color: whitesmoke;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 200%;}
 
 body {
     width: 100vw;
