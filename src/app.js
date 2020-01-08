@@ -102,7 +102,6 @@ const setupConnection = () => {
             if (sentenceContainsWord(voice, commandWords, false)) {
                 const client = clients[userId];
 
-
                 if (client.socket) {
                     client.socket.send(
                         JSON.stringify({ type: 'UPDATED_JOKE' })

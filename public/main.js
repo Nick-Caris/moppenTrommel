@@ -10,7 +10,7 @@ async function updateJoke() {
     const response = await fetch(`http://${host}/${userId}/html`);
     if (response.status === 200) {
         const html = await response.text();
-        const container = document.getElementById('weather-container');
+        const container = document.getElementById('container');
         container.innerHTML = html;
     }
     return null;
@@ -33,7 +33,7 @@ const wsClient = () => {
         const message = JSON.parse(event.data);
 
         switch (message.type) {
-            case 'UPDATE_JOKE':
+            case 'UPDATED_JOKE':
                 // For example, you can fetch new stuff to be displayed on your frontend based
                 await updateJoke();
                 break;

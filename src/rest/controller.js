@@ -9,7 +9,17 @@ const controller = express.Router();
 // Required endpoint so the widget is registered on the Takahe Magic Mirror
 controller.post('/', async (req, res, next) => {
     try {
-        return res.sendStatus(201);
+        const {clients} = req;
+        const {userId} = req.body;
+
+        if (userId) {
+            if (!clients[userId]) {
+                clients[userId] = {};
+                return res.sendStatus(201);
+            }
+            return res.sendStatus(201);
+        }
+        return res.sendStatus(400);
     } catch (error) {
         next(error);
     }
