@@ -109,7 +109,6 @@ const setupConnection = () => {
                     );
                 }
             }
-            // TODO: Implement your own logic here to use the given command as you please.
         });
 
         wsClient.on('close', event => {
