@@ -134,6 +134,7 @@ httpServer.on('upgrade', (req, networkSocket, head) => {
 });
 
 httpServer.listen(HTTP_PORT, async () => {
-    await setupConnection();
     console.log(`http server listening on port: ${HTTP_PORT}`);
+    await setupConnection();
+    console.log('started');
 });
